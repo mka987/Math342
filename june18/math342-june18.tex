@@ -1,0 +1,241 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf June 18, 2025}
+\end{center}
+
+Recall an algebraic monoid is a set $G$ together with a binary operation $G
+\times G \rightarrow G$ satisfying the following:
+\begin{itemize}
+\item[{\bf M1}] Associativity: $a(bc) = (ab)c$ for all $a,\,b,\,c \in G$.
+\item[{\bf M2}] Identity: There is an element $e \in G$ for which $ea=ae=a$ for
+  all $a \in G$.
+\end{itemize}
+
+An example of a monoid is the set of all $n \times n$ matrices with entries over
+$\C$.
+
+An algebraic group is a monoid $G$ satisfying the additional axiom:
+\begin{itemize}
+\item[{\bf G1}] Inverse: For every $a \in G$, there is a $b \in G$ for which
+  $ab=ba=e$.
+\end{itemize}
+
+An example of a group is the set of all $n \times n$ matrices over $\C$ which
+are invertible.
+
+The reader is also reminded of the following definition used previously. If
+$f,\,g$ are two arithmetic functions, then their Dirchlet product $f * g$ is
+defined as
+\[
+  (f * g)(n) = \sum_{d \mid n}f(n)g\left( \frac{n}{d} \right).
+\]
+
+\noindent{\bf Question 1.} For this question, you will need to use results we
+have proven in previous tutorials. Do the following.
+\begin{enumerate*}[{\bf (a)}]
+\item Prove the set $\mathscr{F}$ of all arithmetic functions is a monoid. What
+  is the identity element of $\mathscr{F}$?
+\item What is the largest subset $\mathscr{G}$ of $\mathscr{F}$ such that
+  $\mathscr{G}$ is a group?
+\item Name a second subset $\mathscr{M} \neq \mathscr{G}$ of $\mathscr{F}$ for
+  which $\mathscr{M}$ is also a group.
+\end{enumerate*} \\
+
+\noindent{\bf Question 2.} Do the following.
+\begin{enumerate*}[{\bf (a)}]
+\item Prove the M\"{o}bius inversion formula: Given $f(n) = \sum_{d \mid
+    n}g(d)$, one has $g(n) = \sum_{d \mid n}f(d)\mu(\frac{n}{d})$.
+\item We previously established that $\phi(n) = \sum_{d \mid
+    n}d\mu(\frac{n}{d})$. Use part {\bf (a)} to show that $n=\sum_{d \mid
+    n}\phi(d)$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 3.} The Mangolt function $\Lambda(n)$ is defined as
+\[
+  \Lambda(n) =
+  \begin{cases}
+    \log p & \text{if $n=p^a$ for some prime $p$,} \\
+    0 & \text{otherwise.}
+  \end{cases}
+\]
+
+\noindent Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item If $n \geqq 1$, then $\log n = \sum_{d \mid n}\Lambda(d)$.
+\item Use part {\bf (a)} to show that $\Lambda(n) =$ $ \sum_{d \mid
+    n}\mu(d)\log\frac{n}{d} - \sum_{d \mid n}\mu(d)\log d$.
+\end{enumerate*} \\
+
+An arithmetic function $f$ is completely multiplicative if $f(mn)=f(m)f(n)$ for
+all $m,\,n \in \Z$ (we drop the condition that $(m,\,n)=1$). \\
+
+\noindent{\bf Question 4.} Let $f$ be an arithmetic function. Show the
+following.
+\begin{enumerate*}[{\bf (a)}]
+\item $f$ is completely multiplicative if and only if $f^{-1}=\mu f$, where
+  $f^{-1}$ is the Dirichlet inverse of $f$.
+\item If $f$ is multiplicative, then $\sum_{d \mid n}\mu(d)f(d) = \prod_{p \mid
+    n}(1-f(p))$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 5.} If $n=p_1^{e_1} \cdots p_k^{e_k}$, then Liouville's
+function $\lambda$ is defined as
+\[
+  \lambda(n) = (-1)^{e_1 + \cdots + e_k}.
+\]
+Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item $\lambda$ is completely multiplicative.
+\item $\lambda(n) = 1$ if $n$ is a square and 0 otherwise. Also,
+  $\lambda^{-1}=\abs{\mu}$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 6.} Show the following identities.
+\begin{enumerate}[{\bf (a)}]
+\item
+  \[
+    \frac{n}{\phi(n)} = \sum_{d \mid n}\frac{\mu^2(d)}{\phi(d)}.
+  \]
+  [Hint: Show first that $\frac{\mu^2(n)}{\phi(n)}$ is multiplicative.]
+\item Show for each $k \geqq 1$ that
+  \[
+    \sum_{\begin{smallmatrix}d \mid n \\ d^k \mid n\end{smallmatrix}}\mu(d) =
+    \begin{cases}
+      0 & \text{if $m^k \mid n$ for some $m>1$,} \\
+      1 & \text{otherwise.}
+    \end{cases}
+  \]
+\end{enumerate}
+
+\end{document}
+
