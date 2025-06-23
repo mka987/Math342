@@ -1,0 +1,385 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf June 18, 2025}
+\end{center}
+
+Recall an algebraic monoid is a set $G$ together with a binary operation $G
+\times G \rightarrow G$ satisfying the following:
+\begin{itemize}
+\item[{\bf M1}] Associativity: $a(bc) = (ab)c$ for all $a,\,b,\,c \in G$.
+\item[{\bf M2}] Identity: There is an element $e \in G$ for which $ea=ae=a$ for
+  all $a \in G$.
+\end{itemize}
+
+An example of a monoid is the set of all $n \times n$ matrices with entries over
+$\C$.
+
+An algebraic group is a monoid $G$ satisfying the additional axiom:
+\begin{itemize}
+\item[{\bf G1}] Inverse: For every $a \in G$, there is a $b \in G$ for which
+  $ab=ba=e$.
+\end{itemize}
+
+An example of a group is the set of all $n \times n$ matrices over $\C$ which
+are invertible.
+
+The reader is also reminded of the following definition used previously. If
+$f,\,g$ are two arithmetic functions, then their Dirchlet product $f * g$ is
+defined as
+\[
+  (f * g)(n) = \sum_{d \mid n}f(n)g\left( \frac{n}{d} \right).
+\]
+
+\noindent{\bf Question 1.} For this question, you will need to use results we
+have proven in previous tutorials. Do the following.
+\begin{enumerate*}[{\bf (a)}]
+\item Prove the set $\mathscr{F}$ of all arithmetic functions is a monoid. What
+  is the identity element of $\mathscr{F}$?
+\item What is the largest subset $\mathscr{G}$ of $\mathscr{F}$ such that
+  $\mathscr{G}$ is a group?
+\item Name a second subset $\mathscr{M} \neq \mathscr{G}$ of $\mathscr{F}$ for
+  which $\mathscr{M}$ is also a group.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item In a previous tutorial, we proved that $(f*g)*h = f*(g*h)$, and that
+    there is an identity with respect to the Dirichlet product, namely,
+    $\iota(n)=\lfloor \frac{1}{n} \rfloor$. This shows that the set of
+    arithmetic functions forms a monoid. Also, since $f*g=g*f$, this monoid is
+    commutative.
+  \item The largest subset of $\mathscr{F}$ which is a group is simply the
+    subset of elements which have an inverse. Again, from a previous tutorial,
+    these are those arithmetic functions $f$ for which $f(1) \neq 0$.
+  \item A smaller subset inside $\mathscr{G}$ which is also a group, i.e., a
+    subgroup, consists of the multiplicative arithmetic functions. Indeed,
+    previously, we showed that if $f,\,g$ are multiplicative, then $f*g$ is
+    multiplicative. Further, if $f$ is multiplicative, then $f(1)=1$ as follows.
+    We have that $f(n)=f(1)f(n)$ since $(n,\,1)=1$. But as $f$ is not
+    identically 0, there is some $n$ for which $f(n) \neq 0$, hence $f(1)=1$.
+    Thus, the subset of multiplicative arithmetic functions forms subgroup of
+    $\mathscr{G}$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 2.} Do the following.
+\begin{enumerate*}[{\bf (a)}]
+\item Prove the M\"{o}bius inversion formula: Given $f(n) = \sum_{d \mid
+    n}g(d)$, one has $g(n) = \sum_{d \mid n}f(d)\mu(\frac{n}{d})$.
+\item We previously established that $\phi(n) = \sum_{d \mid
+    n}d\mu(\frac{n}{d})$. Use part {\bf (a)} to show that $n=\sum_{d \mid
+    n}\phi(d)$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Let $u$ be the arithmetic function defined as $u(n)=1$ for all $n \geqq
+    1$. Previously, we have shown that $\sum_{d \mid n}\mu(d)=\lfloor
+    \frac{1}{n} \rfloor$, i.e., we have shown that $u*\mu=\iota$ so that $u
+    \equiv \mu^{-1}$. Therefore, $f=g*u$ if and only if
+    $f*\mu=(g*u)*\mu=g*(\mu*u)=g*\iota=g$, which is the enunciation of part (a).
+  \item Let $\text{id}$ be the function defined by $\text{id}(n)=n$ for all $n
+    \geqq 1$. Then $\text{id}=u*\phi$ if and only if $\phi = \text{id}*\mu$, as
+    required.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 3.} The Mangolt function $\Lambda(n)$ is defined as
+\[
+  \Lambda(n) =
+  \begin{cases}
+    \log p & \text{if $n=p^a$ for some prime $p$,} \\
+    0 & \text{otherwise.}
+  \end{cases}
+\]
+
+\noindent Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item If $n \geqq 1$, then $\log n = \sum_{d \mid n}\Lambda(d)$.
+\item Use part {\bf (a)} to show that $\Lambda(n) =$ $ \sum_{d \mid
+    n}\mu(d)\log\frac{n}{d} = - \sum_{d \mid n}\mu(d)\log d$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Certainly, $\log 1 = \Lambda(1) = 0$. So assume that $n>1$, and write
+    $n=p_1^{e_1} \cdots p_k^{e_k}$. Then
+    \[
+      \log n = \sum_{j=1}^ke_j\log p_j = \sum_{j=1}^k\sum_{i=1}^{e_j}\log p_j =
+      \sum_{j=1}^k\sum_{i=1}^{e_j} \Lambda(p_j^i) = \sum_{d \mid n}\Lambda(d)
+    \]
+    since $\Lambda(d)=0$ whenever $d$ is not of the form $p_j^i$ for some $1
+    \leqq j \leqq k$ and $1 \leqq i \leqq e_j$.
+  \item Let $u$ be the arithmetic function defined by $u(n)=1$ for all $n \geqq
+    1$. Then part (a) asserts that $\log n = (u*\Lambda)(n)$. M\"{o}bius
+    inversion shows that
+    \begin{align*}
+      \Lambda(n) &= (\mu * \log)(n) = \sum_{d \mid n}\mu(d)\log\frac{n}{d} =
+                   \log n\sum_{d \mid n}\mu(d)-\sum_{d \mid n}\mu(d)\log d \\
+      &= \log n\iota(n) -\sum_{d \mid n}\mu(d)\log d = -\sum_{d \mid n}\mu(d)\log d
+    \end{align*}
+    since $\log n \cdot \iota(n) = 0$ for all $n \geqq 0$.
+  \end{enumerate}
+}
+
+An arithmetic function $f$ is completely multiplicative if $f(mn)=f(m)f(n)$ for
+all $m,\,n \in \Z$ (we drop the condition that $(m,\,n)=1$). \\
+
+\noindent{\bf Question 4.} Let $f$ be an arithmetic function. Show the
+following.
+\begin{enumerate*}[{\bf (a)}]
+\item let $f$ be multiplicative. Then $f$ is completely multiplicative if and
+  only if $f^{-1}=\mu f$, where $f^{-1}$ is the Dirichlet inverse of $f$.
+\item If $f$ is multiplicative, then $\sum_{d \mid n}\mu(d)f(d) = \prod_{p \mid
+    n}(1-f(p))$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Let $g=\mu f$. If $f$ is completely multiplicative, then
+    \[
+      (f*g) = \sum_{d \mid n}\mu(d)f(d)f\left( \frac{n}{d} \right) =
+      f(n)\sum_{d \mid n}\mu(d) = f(n)\iota(n) = \iota(n)
+    \]
+    since $f(1)=1$ and $\iota(n)=0$ if $n>1$. Hence, $g \equiv f^{-1}$. \\
+    Conversely, assume that $f^{-1}=\mu f$. To show that $f$ is completely
+    multiplicative, it suffices to show that $f(p^e)=f(p)^e$. Taking the
+    Dirichlet product of both sides of $f^{-1}=\mu f$ with $f$ implies that
+    \[
+      0 = \sum_{d \mid n} \mu(d)f(d)f\left( \frac{n}{d} \right).
+    \]
+    Taking $n=p^e$, we have that
+    \[
+      0 = \mu(1)f(1)f(p^e)+\mu(p)f(p)f(p^{e-1}) = f(p^e)-f(p)f(p^{e-1}),
+    \]
+    hence $f(p^e)=f(p)f(p^{e-1})$. An obvious induction implies $f(p^e)=f(p)^e$,
+    as required. This shows that $f$ is completely multiplicative.
+  \item Let $g(n)=\sum_{d \mid n}\mu(d)f(d)$; then $g$ is multiplicative.
+    Observe,
+    \[
+      g(p^e) = \sum_{d \ mid p^e}\mu(d)f(d) = \mu(1)f(1)+\mu(p)f(p) = 1-f(p).
+    \]
+    Since $g$ is multiplicative, we have that
+    \[
+      g(n) = \prod_{p^e \Vert n}g(p^e) = \prod_{p \mid n}(1-f(p)).
+    \]
+  \end{enumerate}
+}
+
+\noindent{\bf Question 5.} If $n=p_1^{e_1} \cdots p_k^{e_k}$, then Liouville's
+function $\lambda$ is defined as
+\[
+  \lambda(n) = (-1)^{e_1 + \cdots + e_k}.
+\]
+Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item $\lambda$ is completely multiplicative.
+\item $\sum_{d \mid n}\lambda(d) = 1$ if $n$ is a square and 0 otherwise. Also,
+  $\lambda^{-1}=\abs{\mu}$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Let $n=p_1^{e_1} \cdots p_k^{e_k}$ and $m=p_1^{f_1} \cdots p_k^{f_k}$.
+    Then
+    \[
+      \lambda(nm) = \lambda(p_1^{e_1+f_1} \cdots p_k^{e_k+f_k}) =
+      (-1)^{(e_1+f_1)+\cdots+(e_k+f_k)} =
+      (-1)^{e_1+\cdots+e_k}(-1)^{f_1+\cdots+f_k}
+      = \lambda(n)\lambda(m).
+    \]
+  \item Let $g(n)=\sum_{d \mid n}\lambda(d)$. Then $g$ is multiplicative.
+    Observe,
+    \[
+      g(p^e) = \sum_{d \mid p^e}\lambda(d) = 1+(-1)+1+ \cdots +(-1)^e =
+      \begin{cases}
+        0 & \text{if $e$ is odd,} \\
+        1 & \text{if $e$ is even.}
+      \end{cases}
+    \]
+    Hence, since $g$ is multiplicative, $g(n)$ is 1 or 0 according as $n$ is a
+    square or not.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 6.} Show the following identities.
+\begin{enumerate}[{\bf (a)}]
+\item
+  \[
+    \frac{n}{\phi(n)} = \sum_{d \mid n}\frac{\mu^2(d)}{\phi(d)}.
+  \]
+  [Hint: Show first that $\frac{\mu(n)}{\phi(n)}$ is multiplicative. Then use
+  question 4.]
+\item Show for each $k \geqq 1$ that
+  \[
+    \sum_{\begin{smallmatrix}d \mid n \\ d^k \mid n\end{smallmatrix}}\mu(d) =
+    \begin{cases}
+      0 & \text{if $m^k \mid n$ for some $m>1$,} \\
+      1 & \text{otherwise.}
+    \end{cases}
+  \]
+\end{enumerate}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item We know that $\mu$ is multiplicative. Since $\phi$ is multiplicative,
+    $1/\phi$ is also multiplicative, hence a fortiori $\mu/\phi$ is
+    multiplicative. From question 4, we have that
+    \[
+      \sum_{d \mid n}\mu(d)\frac{\mu(d)}{\phi(d)} = \prod_{p \mid n} \left(
+        1-\frac{\mu(p)}{\phi(p)} \right) = \prod_{p \mid n}\left(
+        1+\frac{1}{p-1} \right) = \prod_{p \mid n}\frac{1}{1-1/p}.
+    \]
+    But
+    \[
+      \phi(n) = n\prod_{p \mid n}\left( 1-\frac{1}{p} \right),
+    \]
+    hence
+    \[
+      \sum_{d \mid n}\mu(d)\frac{\mu(d)}{\phi(d)} = \frac{n}{\phi(n)}.
+    \]
+  \item First note that 1 always satisfies $1 \mid n$ and $1^k \mid n$.
+    Therefore, if there is no $m>1$ for which $m^k \mid n$, then the sum is
+    simply $\mu(1)=1$. Assume there is some $m>1$ for which $m^k \mid n$.
+    Suppose, in fact, there are $\ell$ prime power factors of $n$ with exponent
+    greater than $k$, and which are square free. Then
+    \[
+      \sum_{\begin{smallmatrix}d \mid n \\ d^k \mid n\end{smallmatrix}}\mu(d) =
+      \binom{\ell}{0} + \binom{\ell}{1}(-1) + \cdots + \binom{\ell}{\ell}(-1)^\ell
+      = (1-1)^\ell = 0.
+    \]
+  \end{enumerate}
+}
+
+\end{document}
+
