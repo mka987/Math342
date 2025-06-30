@@ -1,0 +1,310 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf June 25, 2025}
+\end{center}
+
+\noindent{\bf Question 1.} Show that if $\overline{a}$ is an inverse of $a$
+modulo $n$, then $\ord_n\overline{a} = \ord_na$. \\
+
+\blue{We can show more generally that $a^t \equiv 1 \pmod{n}$ if and only if
+  $\overline{a}^t \equiv 1 \pmod{n}$. If $a^t \equiv 1 \pmod{n}$, then
+  $\overline{a}^t \equiv (\overline{a}^ta^t)a^t \equiv a^t \equiv 1 \pmod{n}$.} \\
+
+\noindent{\bf Question 2.}  Assume that $(a,\,n)=1=(b,\,n)$. Do the following.
+\begin{enumerate*}[{\bf (a)}]
+\item If $(\ord_na=\ord_nb) = 1$, then $\ord_nab = \ord_na \cdot \ord_nb$.
+\item If we do not assume $(\ord_na=\ord_nb) = 1$, then what can be said about
+  $\ord_nab$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Let $\alpha=\ord_na$, $\beta=\ord_nb$, and $\gamma=\ord_nab$. Since
+    $(ab)^{\alpha\beta} = (a^\alpha)^\beta(b^\beta)^\alpha \equiv 1 \pmod{n}$,
+    we have that $\gamma \mid \alpha\beta$. On the other hand, $1 \equiv
+    (ab)^\gamma \equiv (ab)^{\alpha\gamma} \equiv b^{\alpha\gamma} \pmod{n}$,
+    hence $\beta \mid \alpha\gamma$. Since $(\alpha,\,\beta)=1$, we see that
+    $\beta \mid \gamma$. Similarly, $\alpha \mid \gamma$. Since
+    $(\alpha,\,\beta)=1$, we have that $\alpha\beta \mid \gamma$. We have shown
+    that $\ord_nab=\alpha\beta$.
+  \item Use the notation from part (a). Since $\alpha,\,\beta \mid
+    [\alpha,\,\beta]$, we see at once that $(ab)^{[\alpha,\,\beta]} \equiv
+    \pmod{n}$ whereupon $\gamma \mid [\alpha,\,\beta]$; in particular, $\gamma
+    \leqq [\alpha,\,\beta]$. Also, we still have that $\beta \mid \alpha\gamma$
+    so that $\frac{\beta}{(\alpha,\,\beta)} \mid \gamma$. Similarly,
+    $\frac{\alpha}{(\alpha,\,\beta)} \mid \gamma$. It follows that
+    $\frac{\alpha\beta}{(\alpha,\,\beta)^2} =
+    \frac{[\alpha,\,\beta]}{(\alpha,\,\beta)} \mid \gamma$, hence
+    $\frac{[\alpha,\,\beta]}{(\alpha,\,\beta)} \leqq \gamma$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 3.}
+\begin{enumerate*}[{\bf (a)}]
+\item Suppose $d \mid \phi(n)$. Is it true that there is an integer $a$ for
+  which $\ord_na=d$.
+\item Show that if $(a,\,n)=1$ and $\ord_na=st$, then $\ord_na^t=s$.
+
+\item Show that if $(a,\,n)=1$ and $\ord_na=n-1$, then $n$ is prime.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item This is false. For a counter example, take $n=8$. Then $\phi(8)=4$. If
+    $(a,\,8)=1$ if and only if $a$ is odd. But $a^2 \equiv 1 \pmod{8}$ for every
+    odd integer $a$.
+  \item Observe
+    \[
+      \ord_na^t = \frac{ts}{(ts,t)} = s.
+    \]
+  \item Suppose that $n$ is not prime. Then $\phi(n) < n-1$. Since $\ord_na \mid
+    \phi(n)$, we have that $\ord_na < n-1$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 4.} Show that $r$ is a primitive root modulo the prime
+$p$ if and only if $r$ is an integer with $(r,\,p)=1$ such that
+\[
+  r^{(p-1)/q} \not\equiv 1 \pmod{p}
+\]
+
+\noindent for every prime divisor $q$ of $p-1$. \\
+
+\blue{Certainly, if $r$ is a primitive root mod $p$, then $r^{(p-1)/q}
+  \not\equiv 1 \pmod{p}$. Conversely, Suppose that $r^{(p-1)/q} \not\equiv 1
+  \pmod{p}$ for all prime divisors $q$ of $p-1$, and suppose further that $r$ is
+not a primitive root. Then $p-1$ has a nontrivial factorization $p-1=ts$ where
+$r^t \equiv 1 \pmod{p}$. Let $q$ be a prime divisor of $s$, then $r^{(p-1)/q} =
+(r^t)^{s/q} \equiv 1 \pmod{p}$, contradicting our original assumption.} \\
+
+\noindent{\bf Question 5.} Let $m=a^n-1$. Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item $\ord_ma=n$, and
+\item $n \mid \phi(m)$.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Observe that $a^t < a^n-1$ whenever $1 \leqq t < n$, hence $a^t
+    \not\equiv 1 \pmod{m}$. But $a^n \equiv 1 \pmod{m}$ since $m=a^n-1$. It
+    follwos that $\ord_ma=n$.
+  \item Since $\ord_ma=n$, this is trivial.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 6.} Let $p$ be a prime, and let $\phi(p-1)=q_1^{e_1}
+\cdots q_k^{e_k}$ where each $q_i$ is prime.
+\begin{enumerate*}[{\bf (a)}]
+\item Show there are integers $a_1,\dots,\,a_k$ such that $\ord_pa_i=q_i^{e_i}$
+  for each $i=1,\dots,\,k$.
+\item Show that $a=a_1 \cdots a_k$ is a primitive root modulo $p$.
+\item Follow the procedure outlined above to show find a primitive root modulo
+  29.
+\end{enumerate*}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Since $q_i^{e_i} \mid \phi(p)$, there are $\phi(q_i^{e_i})$ incongruent
+    elements of order $p_i^{e_i}$ mod $p$. Let $a_i$ be one such element.
+  \item By question 2(a) and an obvious induction, we have that $\ord_p(a) =
+    \prod_i\ord_p(a_i) = \prod_i\phi(q_i^{e_i})=\phi(p-1)$, i.e., $a$ is a
+    primitive element modulo $p$.
+  \item We have
+    \begin{enumerate*}[(i)]
+    \item $\phi(29)=28=4 \cdot 7$,
+    \item $\ord_{29}12 = 4$, and
+    \item $\ord_{29}16=7$.
+    \end{enumerate*}
+    Therefore $\ord_{29}(12 \cdot 16) = 28$. Since $12 \cdot 16 \equiv 18
+    \pmod{29}$, we have shown that $18$ is a primitive root modulo 29.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 7.} Show that if $p$ is an odd prime then
+\[
+  \left( \frac{-2}{p} \right) =
+  \begin{cases}
+    1 & \text{if $p \equiv 1,\,3 \pmod{8}$,} \\
+    -1 & \text{if $p \equiv -1,\,-3 \pmod{8}$.}
+  \end{cases}
+\]
+
+\blue{
+  We know that 2 is a quadratic residue mod $p$ if $p \equiv 1,\,7 \pmod{p}$ and
+  a quadratic nonresidue if $p \equiv 3,\,5 \pmod{8}$. We also know that $-1$ is
+  a quadratic residue if $p \equiv 1 \pmod{4}$ and a quadratic nonresidue if $p
+  \equiv -1 \pmod{4}$. Since $(-2 \mid p) = (-1 \mid p)(2 \mid p)$, we have that
+  $-2$ is a quadratic residue if $p \equiv 1,\,3 \pmod{8}$ and a quadratic
+  nonresidue if $p \equiv 5,\,7 \pmod{p}$. Also
+  \[
+    \left( \frac{-2}{p} \right) = \left( \frac{-1}{p} \right)\left( \frac{2}{p}
+    \right) = (-1)^{\frac{(p-1)(p^2-1)}{16}}.
+  \]
+}
+
+\noindent{\bf Question 8.} Determine those primes $p$ for which $(-3 \mid p) =
+-1$ and those primes $q$ for which $(-3 \mid q) = 1$. \\
+
+\blue{By quadratic resiprocity,
+  \[
+    \left( \frac{-3}{p} \right) = \left( \frac{-1}{p} \right)\left( \frac{3}{p}
+    \right) = (-1)^{(p-1)/2}(-1)^{(p-1)/2}\left( \frac{p}{3} \right).
+  \]
+  Therefore,
+  \[
+    \left( \frac{-3}{p} \right) =
+    \begin{cases}
+      1 & \text{ if $p \equiv 1\pmod{3}$,} \\
+      -1 & \text{ if $p \equiv -1\pmod{3}$,} \\
+      0 & \text{ if $p \equiv 0\pmod{3}$.} \\
+    \end{cases}
+  \]
+}
+
+\noindent{\bf Question 9.} Prove that 5 is a quadratic residue of an odd prime
+$p$ if $p \equiv \pm1 \pmod{10}$, and that 5 is a non residue if $p \equiv \pm 3
+\pmod{10}$. \\
+
+\blue{By quadratic resiprocity, $(5 \mid p) = (p \mid 5)$. So,
+  \[
+    \left( \frac{5}{p} \right) =
+    \begin{cases}
+      1 & \text{if $p \equiv \pm1 \pmod{5}$,} \\
+      -1 & \text{if $p \equiv \pm2 \pmod{5}$.} \\
+    \end{cases}
+  \]
+}
+
+\end{document}
+
