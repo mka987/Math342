@@ -1,0 +1,192 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf July 2, 2025}
+\end{center}
+
+Recall a group $G$ is cyclic if there is some $g \in G$ for which $G = \{g^n : n
+\in \Z\}$. If $G$ is finite with $n$ distinct elements, then $G =
+\{1,\,g,\,g^2,\dots,\,g^{n-1}\}$. We often use the notation $G = \langle g
+\rangle$ in this case. \\
+
+\noindent{\bf Question 1.} Let $G = \langle g \rangle$ be a finite cyclic group
+of order $n$. Show that for every divisor $d$ of $n$, there is a unique subgroup
+$H$ of $G$ of order $d$. Show, moreover, that $H$ is cyclic. \\
+
+\noindent{\bf Question 2.} Fill in the details of the following argument to show
+that $(\Z/p\Z)^*$, the nonzero residues modulo $p$, form a cyclic group.
+\begin{enumerate}[{\bf (a)}]
+\item Let $h = q_1^{r_1} \cdots q_s^{r_s}$ be the prime power
+  factorization of $h = p-1$. Show that for every $1 \leqq i \leqq s$, there is
+  a nonzero residue which is not a root of $x^{h/p_i}-1$ modulo $p$.
+\item Let $a_i$ be a nonzero residue which is not a root of $x^{h/p_i}-1$, and
+  define $b_i=a_i^{h/p_i^{r_i}}$. Show that $\ord_p(b_i)=r_i$.
+\item Show the element $b = b_1 \cdots b_s$ has multiplicative order $h = p-1$.
+  In particular, this shows that $(\Z/p\Z)^*$ is cyclic. We call $b$ a primitive
+  root modulo $p$.
+\end{enumerate}
+
+Compare the previous question with Question 6 of the previous tutorial set. \\
+
+\noindent{\bf Question 3.} Use Questions 1 and 2 to show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item $a^p \equiv a \pmod{p}$ for every integer $a$.
+\item $\left( \frac{a}{p} \right) \equiv \pm1 \pmod{p}$; in particular, $\left(
+    \frac{a}{p} \right) \equiv 1 \pmod{p}$ if and only if $a$ is a quadratic
+  residue modulo $p$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 4.} We will give a second proof of the fact that $\left(
+  \frac{2}{p} \right) = (-1)^{(p^2-1)/8}$. Fill in the following details.
+\begin{enumerate}[{\bf (a)}]
+\item Let $i$ be the principal root of $-1$. Show that $(1+i)^2=2i$. Use this to
+  show that $(1+i)^p = (1+i)i^{(p-1)/2}2^{(p-1)/2}$.
+\item Show that $\left( \frac{2}{p} \right)(1+i)i^{(p-1)/2} \equiv
+  1+i(-1)^{(p-1)/2} \pmod{p}$. Use this to show that $\left( \frac{2}{p} \right)
+  \equiv (-1)^{(p\pm1)/2} \pmod{p}$ predicated upon whether $\frac{p-1}{2}$ is
+  even or odd.
+\item Deduce that $\left( \frac{2}{p} \right) \equiv (-1)^{(p^2-1)/8}$.
+\end{enumerate}
+
+\noindent{\bf Question 5.} Use quadratic reciprocity to determine $\left(
+  \frac{3}{p} \right)$. \\
+
+\noindent{\bf Question 6.} Euler's Theorem is the following. {\it Let $p$ be an odd
+prime, and let $a$ be an integer not divisible by $p$. If $q$ is a prime with $p
+\equiv \pm q \pmod{4a}$, then $\left( \frac{a}{p} \right) = \left( \frac{a}{p}
+\right)$.} Show that Euler's Theorem is equivalent to the law of quadratic
+reciprocity shown in class. [Hint: For necessity, it is convenient to consider
+the cases $a=2$, $a$ an odd prime, and $a$ composite separately.] \\
+
+\end{document}
+
