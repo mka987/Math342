@@ -1,0 +1,208 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf July 9, 2025}
+\end{center}
+
+\noindent{\bf Question 1.} Show that if $n = p_1^{2e_1+1} \cdots p_k^{2e_k+1}
+q_1^{2f_1} \cdots q_m^{2f_m}$, and if $r$ is an odd prime not dividing $n$, then
+\[
+  \left( \frac{n}{r} \right) =
+  \left( \frac{p_1}{r} \right) \cdots \left( \frac{p_k}{r} \right).
+\] \\
+
+\noindent{\bf Question 2.} Show that if $p$ is odd prime that is $3 \pmod{4}$,
+then $[(p-1)/2]! \equiv (-1)^t \pmod{p}$ where $t$ is the number of nonquadratic
+residues in the range 0 to $\lfloor p/2 \rfloor$ inclusive. \\
+
+\noindent{\bf Question 3.} Let $p$ be an odd prime. Prove the following
+identities.
+\begin{enumerate*}[{\bf (a)}]
+\item $\sum_{r=1}^{p-1}r(r \mid p) = 0$ if $p \equiv 1 \pmod{4}$.
+\item $\sum_{\begin{smallmatrix}r=1 \\ (r \mid p)=1\end{smallmatrix}}^{p-1}r =
+  \frac{p(p-1)}{4}$ if $p \equiv 1 \pmod{4}$.
+\item $\sum_{r=1}^{p-1}r^2(r \mid p) = p\sum_{r=1}^{p-1}r(r \mid p)$ if $p
+  \equiv 3 \pmod{p}$.
+\item $\sum_{r=1}^{p-1}r^3(r \mid p) = \frac{3}{2}p\sum_{r=1}^{p-1}r^2(r \mid
+  p)$ if $p \equiv 1 \pmod{4}$.
+\item $\sum_{r=1}^{p-1}r^4(r \mid p) =$ $2p\sum_{r=1}^{p-1}r^3(r \mid
+  p)-p^2\sum_{r=1}^{p-1}r^2(r \mid p)$ if $p \equiv 1\pmod{4}$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 4.} Show that if $a$ is a quadratic residue of the prime
+$p$, then the solutions of $x^2 \equiv a \pmod{p}$ are
+\begin{enumerate*}[{\bf (a)}]
+\item $x \equiv \pm a^{n+1} \pmod{p}$ if $p = 4n+3$, or
+\item $x \equiv \pm a^{n+1} \text{ or } \pm2^{2n+1}a^{n+1} \pmod{p}$ if $p=8n+5$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 5.} Show there are infinitely many primes of the
+following forms
+\begin{enumerate*}[{\bf (a)}]
+\item $8k+3$,
+\item $8k+5$, and
+\item $8k+7$.
+\end{enumerate*}
+[Hint: For each part, assume there are only finitely many primes
+$p_1,\,p_2,\dots,\,p_k$ of the required form. For (a), consider $(p_1 \cdots
+p_k)^2+2$; for (b), consider $(p_1 \cdots p_k)^2+4$; for (c), consider $(4p_1
+\cdots p_k)^2-2$. Use what you know about $(-1 \mid p)$ and $(2 \mid p)$.] \\
+
+\noindent{\bf Question 6.} Show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item If $p=4k+1$ is a prime, then there is an integer $x$ such that $mp=1+x^2$
+  where $0 < m < p$.
+\item If $p$ is an odd prime, then there are integers $x$ and $y$ such that
+  $1+x^2+y^2 = mp$ where again $0 < m < p$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 7.} Determine those primes for which 7 is a quadratic
+residue. \\
+
+Let $a$ and $n$ be positive integers, and let $n=p_1^{e_1} \cdots p_k^{e_k}$ be
+the prime power factorization of $n$. The Jocabi symbol is defined as $(a \mid
+n) = (a \mid p_1)^{e_1} \cdots (a \mid p_k)^{e_k}$. \\
+
+\noindent{\bf Question 8.} Prove the following properties of the Jacobi symbol.
+\begin{enumerate*}[{\bf (a)}]
+\item If $a \equiv b \pmod{n}$, then $(a \mid n) = (b \mid n)$;
+\item $(ab \mid n) = (a \mid n)(b \mid n)$;
+\item $(-1 \mid n) = (-1)^{(n-1)/2}$;
+\item $(2 \mid n) = (-1)^{(n^2-1)/8}$.
+\end{enumerate*} \\
+
+\noindent{\bf Question 9.} Prove quadratic reciprocity holds for the Jacobi
+symbol, i.e., $(n | mid m)(m \mid n) = (-1)^{(m-1)(n-1)/4}$.
+
+\end{document}
+
