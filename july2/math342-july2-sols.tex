@@ -1,0 +1,272 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf July 2, 2025}
+\end{center}
+
+Recall a group $G$ is cyclic if there is some $g \in G$ for which $G = \{g^n : n
+\in \Z\}$. If $G$ is finite with $n$ distinct elements, then $G =
+\{1,\,g,\,g^2,\dots,\,g^{n-1}\}$. We often use the notation $G = \langle g
+\rangle$ in this case. \\
+
+\noindent{\bf Question 1.} Let $G = \langle g \rangle$ be a finite cyclic group
+of order $n$. Show that for every divisor $d$ of $n$, there is a unique subgroup
+$H$ of $G$ of order $d$. Show, moreover, that $H$ is cyclic. \\
+
+\blue{Let $d$ be a nontrivial divisor of $n$, and let $h=g^{n/d}$. Certainly,
+  $h^d=g^n=1$, hence $\ord(h) \mid d$. Suppose there is a nontrivial divisor
+  $d_1$ of $d$ for which $h^{d_1}=1$. Then $g^{nd_1/d}=1$, but $nd_1/d < n$
+  which contradicts the fact that $\ord(g)=n$.}
+
+\blue{We have shown that $G$ has a cyclic group of order $d$ for every
+  nontrivial divisor $d$ of $n$. Conversely, suppose that $H$ is a (not
+  necessarily cyclic) subgroup of $G$ of order $d$. By the Well-Ording
+  Principal, there is a positive integer $m$ for which $m$ is the smallest
+  exponent of a power of $g$ appearing in $H$. For an integer $k$, and by the
+  Division Algorithm, there are uniquely determined integers $q$ and $r$ with $0
+  \leqq r < m$ for which $k=qm+r$. Suppose $g^k = g^{qm+r} \in H$; then $g^r \in
+  H$ since $g^{qm} \in H$. By the minimality of $m$, we have that $r=0$. It
+  follows that every element of $H$ is of the form $g^{qm}$ for some integer
+  $q$. We have shown that $H \subseteqq \langle g^m \rangle$. As $g^m \in H$, we
+  have also that $\langle g^m \rangle \subseteqq H$. We have shown therefore
+  that $H$ is cyclic.} \\
+
+\noindent{\bf Question 2.} Fill in the details of the following argument to show
+that $(\Z/p\Z)^*$, the nonzero residues modulo $p$, form a cyclic group.
+\begin{enumerate}[{\bf (a)}]
+\item Let $h = q_1^{r_1} \cdots q_s^{r_s}$ be the prime power
+  factorization of $h = p-1$. Show that for every $1 \leqq i \leqq s$, there is
+  a nonzero residue which is not a root of $x^{h/p_i}-1$ modulo $p$.
+\item Let $a_i$ be a nonzero residue which is not a root of $x^{h/p_i}-1$, and
+  define $b_i=a_i^{h/p_i^{r_i}}$. Show that $\ord_p(b_i)=p_i^{r_i}$.
+\item Show the element $b = b_1 \cdots b_s$ has multiplicative order $h = p-1$.
+  In particular, this shows that $(\Z/p\Z)^*$ is cyclic. We call $b$ a primitive
+  root modulo $p$.
+\end{enumerate}
+
+\blue{By a result of Lagrange, there are at most $h/p_i < h$ roots of
+  $x^{h/p_i}-1$ modulo $p$. Therefore, there is a nonzero residue $a_i$ which is
+  not such a root. Defining $b_i=a_i^{h/p_i^{r_i}}$, we see that $b_i^{p_i^{r_i}} =
+  a_i^h = 1$ whereupon $\ord(b_i) \mid p_i^{r_i}$. But $b_i^{p_i^{r_i-1}} =
+  a^{h/p_i} \neq 1$, hence $\ord(b_i)=p_i^{r_i}$.}
+
+\blue{Define $b = b_1 \cdots b_s$, and suppose that $\ord(b)$ is a proper
+  divisor of $h = p-1$. Therefore, $\ord(b)$ divides one of the $s$ integers
+  $h/p_i$, say $h/p_1$. For $i > 1$, we have that $b_i^{h/p_1}=1$ (why?). It
+  follows that $b^{h/p_1} = b_1^{h/p_1}=1$. Therefore, $\ord(b_1) \mid h/p_1$;
+  but this is impossible since we have already shown that $\ord(b_1) =
+  p_1^{r_1}$.} \\
+
+Compare the previous question with Question 6 of the previous tutorial set. \\
+
+\noindent{\bf Question 3.} Use Questions 1 and 2 to show the following.
+\begin{enumerate*}[{\bf (a)}]
+\item $a^p \equiv a \pmod{p}$ for every integer $a$.
+\item $\left( \frac{a}{p} \right) \equiv a^{(p-1)/2} \pmod{p}$.
+\end{enumerate*} \\
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item We have already shown that $(\Z/p\Z)^*$ is a cyclic group of order $p-1$.
+    Let $g \in (\Z/p\Z)^*$ be such that $(\Z/p\Z)^* = \langle g \rangle$. For
+    every nonzero residue $g^k$, we have shown that $\langle g^k \rangle$ is a
+    subgroup of order $(p-1)/(k,\,n)$. Thus, $(g^k)^{p-1} =
+    (g^{[p-1,\,k]})^{(p-1,\,k)} = 1^{(p-1,\,k)} = 1$. It follows that $a^p
+    \equiv a \pmod{p}$ whenever $p$ does not divide $a$. If $p \mid a$, then $a
+    \equiv 0 \pmod{p}$ and the result is trivial.
+  \item From what we have shown, the quadratic residues are the subgroup
+    $\langle g^2 \rangle$ which are exactly those nonzero residues $a$ for which
+    $a^{(p-1)/2} = 1$. Since $\ord(a^{(p-1)/2}) \leqq 2$, if $a^{(p-1)/2} \neq
+    1$, i.e., it is not a quadratic residue, then $a^{(p-1)/2} = -1$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 4.} We will give a second proof of the fact that $\left(
+  \frac{2}{p} \right) = (-1)^{(p^2-1)/8}$. Fill in the following details.
+\begin{enumerate}[{\bf (a)}]
+\item Let $i$ be the principal root of $-1$. Show that $(1+i)^2=2i$. Use this to
+  show that $(1+i)^p = (1+i)i^{(p-1)/2}2^{(p-1)/2}$.
+\item Show that $\left( \frac{2}{p} \right)(1+i)i^{(p-1)/2} \equiv
+  1+i(-1)^{(p-1)/2} \pmod{p}$. Use this to show that $\left( \frac{2}{p} \right)
+  \equiv (-1)^{(p\pm1)/4} \pmod{p}$ predicated upon whether $\frac{p-1}{2}$ is
+  even or odd.
+\item Deduce that $\left( \frac{2}{p} \right) \equiv (-1)^{(p^2-1)/8}$.
+\end{enumerate}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Note $(1+i)^2 = 1+2i+i^2 = 1+2i-1 = 2i$, hence
+    \[
+      (1+i)^p = (1+i)((1+i)^2)^{(p-1)/2} = (1+i)i^{(p-1)/2}2^{(p-1)/2}.
+    \]
+  \item Observe, $i^p = i \cdot i^{p-1} = i(-1)^{(p-1)/2}$. Since $(1+i)^p
+    \equiv 1 + i^p \pmod{p}$ and $2^{(p-1)/2} \equiv \left( \frac{2}{p} \right)
+    \pmod{p}$, we have that $\left( \frac{2}{p} \right)(1+i)i^{(p-1)/2} \equiv
+    1+i(-1)^{(p-1)/2} \pmod{p}$ as desired. If $(p-1)/2$ is even, then the
+    congruence becomes $\left( \frac{2}{p} \right)(1+i)(-1)^{(p-1)/4} \equiv
+    1+i\pmod{p}$. Since $p$ is odd, $1+i$ is invertible in $(\Z/p\Z)[i]$. The
+    congruence is therefore equivalent to $\left( \frac{2}{p} \right) \equiv
+    (-1)^{(p-1)/4} \pmod{p}$. If $(p-1)/2$ is odd, the congruence becomes
+    $\left( \frac{2}{p} \right)(1+i)i^{(p-1)/2} \equiv 1-i \pmod{p}$.
+    Multiplying by $i$, and using the fact that $(p-1)/2$ is odd, the congruence
+    is equivalent to $\left( \frac{2}{p} \right)(1+i)(-1)^{(p+1)/2} \equiv 1+i
+    \pmod{p}$. Dividing by $1+i$, the congruence is equivalent to $\left(
+      \frac{2}{p} \right) \equiv (-1)^{(p+1)/2}$.
+  \item Observe that $\frac{p^2-1}{8} = \frac{p-1}{4} \frac{p+1}{2} =
+    \frac{p+1}{4}\frac{p-1}{2}$. It follows at once that $\left( \frac{2}{p}
+    \right) = (-1)^{(p^2-1)/8}$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 5.} Use quadratic reciprocity to determine $\left(
+  \frac{3}{p} \right)$. \\
+
+\blue{By quadratic reciprocity, $(3 \mid p) = (-1)^{(p-1)/2}(p \mid 3)$.
+  We next consider the possible cases for the residues of $p$ modulo 4 and 3.
+  Suppose first that $p \equiv 1\pmod{4}$. If $p \equiv 1 \pmod{3}$, then $p
+  \equiv 1\pmod{12}$ and $(3 \mid p) = 1$; if $p \equiv 2 \pmod{3}$, then $p
+  \equiv 5 \pmod{12}$ and $(3 \mid p) = -1$. Next, suppose that $p \equiv 3
+  \pmod{4}$. If $p \equiv 1 \pmod{3}$, then $p \equiv 7\pmod{12}$ and $(3 \mid
+  p)=-1$; if $p \equiv 2\pmod{3}$, then $p \equiv 11\pmod{12}$ and $(3 \mid
+  p)=1$. We have shown therefore that
+  \[
+    \left( \frac{3}{p} \right) =
+    \begin{cases}
+      1 & \text{if $p \equiv \pm1\pmod{12}$,} \\
+      -1 & \text{if $p \equiv \pm5\pmod{12}$.}
+    \end{cases}
+  \]
+}
+
+\end{document}
+
