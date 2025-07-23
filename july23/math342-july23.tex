@@ -1,0 +1,184 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf July 23, 2025}
+\end{center}
+
+\noindent{\bf Fast Fourier Transform.} Let $n=2^m$, $a(x)=\sum_{j=0}^{n-1}a_jx^j$,
+and $\omega=e^{2\pi\sqrt{-1}/n}$. The Fourier transform of of $a(x)$ is the
+vector $(\hat a_0, \dots,\,\hat a_{n-1})$ where $\hat a_i = \sum_j
+a_j\omega^{ij}$. Given $a(x) = \sum_{j=0}^{n-1}a_jx^j$, define
+$A(x)=\sum_{j=0}^{2n-1}a_jx^j$. Show the following.
+\begin{enumerate}[{\bf (a)}]
+\item Given two polynomials $a$ and $b$ of degree $n=2^k$, show that the Fourier
+  transform of $c(x)=a(x)b(x)$ is $(\hat c_0, \dots,\,\hat c_{2n-1})$ where
+  $\hat c_i = \hat A_i \hat B_i$.
+\item Show that $(a_0, \dots,\,a_{n-1}) \mapsto (\bar a_0,\dots,\,\bar a_{n-1})$
+  where $\bar a_i = n^{-1}\sum_{j=0}^{n-1}a_i\omega^{-ij}$ is an inverse of the
+  Fourier transform.
+\item Show that we can use the Fourier transform to multiply two polynomials in
+  $O(n\log n)$ time. [Hint: Decompose a polynomial $a(x)$ of degree $n=2^k$ as
+  $a(x) = b(x^2)+xc(x^2)$ where $b(x)$ and $c(x)$ are the terms of even and odd
+  exponent, respectively. Use the fact that $\{1,\omega,\dots,\omega^{n-1}\}$
+  are symmetric in the sense that $\omega^{n/2+i}=-\omega^i$.]
+\end{enumerate}
+
+\noindent{\bf Fast Matrix Multiplication.}
+\begin{enumerate}[{\bf (a)}]
+\item Show that standard matrix multiplication is $O(n^3)$.
+\item Show that it is possible to multiply two $2 \times 2$ matrices using only
+  7 multiplications. Use the identity
+  \[
+    \begin{pmatrix}
+      a_{11} & a_{12} \\ a_{21} & a_{22}
+    \end{pmatrix}
+    \begin{pmatrix}
+      b_{11} & b_{12} \\ b_{21} & b_{22}
+    \end{pmatrix} = C
+  \]
+  with
+  \begin{align*}
+    c_{11} &= a_{11}b_{11}+a_{12}b_{21}, \\
+    c_{12} &= x+(a_{21}+a_{22})(b_{12}-b_{11}) + (a_{11}+a_{12}-a_{21}-a_{22})b_{22},\\
+    c_{21} &= x+(a_{11}-a_{21})(b_{22}-b_{12})-a_{22}(b_{11}-b_{21}-b_{12}+b_{22}),\\
+    c_{22} &= x+(a_{11}-a_{21})(b_{22}-b_{12})+(a_{21}+a_{22})(b_{12}-b_{11}).
+  \end{align*}
+\item Use an inductive argument to show that one may multiply $2^k \times 2^k$
+  matrices using only $7^k$ multiplications and fewer than $7^{k+1}$ additions.
+  Conclude that two $n \times n$ matrices can be multiplied using $O(n^{\log_2
+    7})$ bit operations when all entries of the matrix a less than a constant
+  $c$ number of bits.
+\end{enumerate}
+
+\end{document}
+
