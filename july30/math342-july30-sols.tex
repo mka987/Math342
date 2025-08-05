@@ -1,0 +1,216 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs}
+\usepackage[left=1.0in,right=1.0in,top=1.0in,bottom=1.0in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{calc}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{capt-of}
+\usepackage{subcaption}
+\usepackage[leftcaption]{sidecap}
+\usepackage[numbers]{natbib}
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{lineno}
+\usepackage{xpatch}
+\xpatchcmd\swappedhead{~}{.~}{}{}
+\allowdisplaybreaks
+
+\newtheoremstyle{mythm}
+{}                % Space above
+{}                % Space below
+{\itshape}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mythm}
+
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newtheoremstyle{mydef}
+{}                % Space above
+{}                % Space below
+{}        % Theorem body font % (default is "\upshape")
+{1.5em}                % Indent amount
+{\scshape}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{0.5em}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{mydef}
+
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+\item\relax
+  {\hspace{1.5em}\itshape
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+\def\Box{\hskip1ex\vbox{\hrule height0.6pt\hbox{%
+      \vrule height1.3ex width0.6pt\hskip0.8ex
+      \vrule width0.6pt}\hrule height0.6pt
+  }}
+\renewcommand{\qed}{\Box}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{magenta}{#1}}
+\newcommand{\ddet}{\text{det}}
+\renewcommand{\pmod}[1]{\text{ (mod $#1$)}}
+\newcommand{\mmod}[2]{#1\text{ mod }#2}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\LL}{\mathscr{G}}
+\newcommand{\z}{\mathbin{\ooalign{$\hidewidth i \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\y}{\mathbin{\ooalign{$\hidewidth j \hidewidth$\cr$\phantom{+}$}}}
+\newcommand{\gf}{\text{GF}}
+\newcommand{\ord}{\text{ord}}
+
+\newcolumntype{R}{>{\scriptsize}r}
+\newcolumntype{L}{>{\scriptsize}l}
+\newcolumntype{C}{>{\scriptsize}c}
+
+\renewcommand{\citenumfont}[1]{\textbf{#1}}
+\renewcommand{\bibnumfmt}[1]{\textbf{#1.}}
+
+\titleformat{\section}{\normalfont\Large\bfseries\centering}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+
+\newenvironment{myabstract}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Abstract.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+\newenvironment{mykeywords}{\vspace{1em}\begin{adjustwidth}{3em}{3em}\begin{small}\textbf{Keywords.}}{\end{small}\end{adjustwidth}\vspace{1em}}
+
+\DeclareCaptionLabelSeparator{custom}{.}
+\DeclareCaptionLabelFormat{custom}
+{%
+  \textsc{#1 #2}
+}
+\DeclareCaptionFormat{custom}
+{%
+  #1#2 #3
+}
+\captionsetup
+{
+  format=custom,%
+  labelformat=custom,%
+  labelsep=custom
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Math 342 Tutorial} \\
+  {\normalsize\bf July 30, 2025}
+\end{center}
+
+\noindent{\bf Question 1.}
+\begin{enumerate}[{\bf (a)}]
+\item If the two most common letters in a long ciphertext, encrypted by an
+  affine transformation $C \equiv aP+b \pmod{26}$, are $X$ then $Q$, then what
+  are the most likely values for $a$ and $b$.
+\item If the two most common letters in a long ciphertext, encrypted by an
+  affine transformation $C \equiv aP+b \pmod{26}$, are $W$ then $B$, then what
+  are the most likely values for $a$ and $b$.
+\end{enumerate}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item E and T are the most common letters. $E=4$, $T=19$, $Q=16$, and $X=23$.
+    We suspect that $a4+b \equiv 23 \pmod{26}$ $a19+b \equiv 16 \pmod{26}$,
+    which has the solution $a=3$ and $b=11$.
+  \item E and T are the most common letters. $E=4$, $T=19$, $W=22$, and $B=1$.
+    We have $22 \equiv a4+b \pmod{26}$ and $1 \equiv a19+b \pmod{26}$. This
+    system has the solution $a=9$ and $b=12$.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 2.}
+\begin{enumerate}[{\bf (a)}]
+\item Decrypt MJMZK CXUNM GWIRY VCPUW MPRRW GMIOP MSNYS RYRAZ PXMCD WPRYE YXD
+  which was encrypted using an affine transformation.
+\item Decrypt WEZBF TBBNJ THNBT ADZQE TGTYR BZAJN ANOOZ ATWGN ABOVG FNWZV A
+  which was encrypted using an affine transformation.
+\item Decrypt PJXFJ SWJNX JMRTJ FVSUJ OOKWE OVAJR WHEOF JRWJO DJFFZ BJF
+  which was encrypted using an affine transformation.
+\end{enumerate}
+
+\blue{
+  \begin{enumerate}[{\bf (a)}]
+  \item Try $J \rightarrow E$ and $O \rightarrow T$. Solve $9 \equiv a4+b$ and
+    $14 \equiv a19+b$ to get $P \equiv 3C+3$. Then the message becomes WEUSE
+    FREQU ENCIE SOFLE TTERS TODEC RYPTS ECRET MESSA GES.
+  \item We solve to get $P \equiv 5C+13$. The message decrypts as THISM ESSAG
+    EWASE NCIPH EREDU SINGA NAFFI NETRA NSFOR MATIO N.
+  \item Solve $9 \equiv a4+b$ and $14 \equiv a19+b$ to get $a=9$ and $b=25$.
+    Then we solve $C \equiv 9P+25$ to get $P \equiv 3C+3$. The message decrypts
+    as WEUSE FREQU ENCIE SOFLE TTERS TODEC RYPTS ECRET MESSA GES.
+  \end{enumerate}
+}
+
+\noindent{\bf Question 3.} What is the plaintext message that corresponds to the
+ciphertext 1213 0902 0539 1208 1234 1103 1374 that is produced using modular
+exponentiation with modulus $p=2591$ and encryption key $e=13$? \\
+
+\blue{The inverse of 13 modulo 2590 is 797. The planetext blocks are then given
+  by $P \equiv C^{797} \pmod{2591}$. Decyphering, we get DO NO TR EA DT HI
+  SX.} \\
+
+\noindent{\bf Question 4.} Show that the encryption and decryption procedures
+are identical when encryption is done using modular exponentiation with modulus
+$p=31$ and enciphering key $e=11$. \\
+
+\blue{We have that $11 \cdot 11 \equiv 1 \pmod{30}$.} \\
+
+\noindent{\bf Question 5.} Suppose a cryptanalyst discovers a message $P$ that
+is relatively prime to the enciphering modulus $n=pq$ used in the RSA cipher.
+Show the cryptanalyst can factor $n$. \\
+
+\blue{Since a block of ciphertext $p$ is less than $n$, we must have $(p,n)=p
+  \text{ or } q$. Therefore the cryptanalyst has a factor of $n$.} \\
+
+\noindent{\bf Question 6.} Show that it is extremely unlikely that a message
+such as that described in the previous exercise can be discovered. Do this by
+demonstrating that the probability that a message $P$ is not relatively prime to
+$n$ is $\frac{1}{p}+\frac{1}{q}-\frac{1}{pq}$. Assume that it is equally likely
+for a message to fall into each residue class modulo $n$. \\
+
+\blue{The probability that an integer in the range $0,\dots,n-1$ is divisible by
+$p$ is $1/p$ since there are $q$ integers in the range $pq$ that are divisible
+by $p$. Similarly, and integer is divisible by $q$ with propability $1/q$. The
+probability that it is divisible by both $p$ and $q$ is $1/pq$ since only 0 is
+divisible by $pq$ in the range $0,\dots,n-1$. Therefore, the probability that
+$(P,n)>1$ is $1/p+1/q-1/pq$, as desired.}
+
+\end{document}
+
